@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>首页</title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="author" content="order by mobanxiu.cn"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 引入外部样式文件 -->
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../xznstatic/css/common.css"/>
+    <link rel="stylesheet" href="../../xznstatic/css/style.css"/>
+    <link rel="stylesheet" href="../../xznstatic/css/animate.css"/><!-- 动画效果 -->
+    <link rel="stylesheet" href="../../xznstatic/css/swiper.min.css"/>
+    <link rel="stylesheet" href="../../xznstatic/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/theme.css"/>
+    <style>
+        /* 全局样式 */
+        html::after {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            content: '';
+            display: block;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            /* 添加毛玻璃效果 */
+            backdrop-filter: blur(10px);
+            background-color: rgba(0 0 0 / 4%); /* 半透明背景 */
+        }
+
+        /* 轮播图样式 */
+        #test1 {
+            overflow: hidden;
+        }
+
+        #test1 .layui-carousel-ind li {
+            width: 20px;
+            height: 10px;
+            border-width: 0;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, .3);
+            border-radius: 6px;
+            background-color: #f7f7f7;
+            box-shadow: 0 0 6px rgba(255, 0, 0, .8);
+        }
+
+        #test1 .layui-carousel-ind li.layui-this {
+            width: 30px;
+            height: 10px;
+            border-width: 0;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, .3);
+            border-radius: 6px;
+        }
+
+        .layui-carousel-ind {
+            top: 0;
+        }
+
+        .layui-carousel-ind ul {
+            position: absolute;
+            bottom: 8px !important;
+            z-index: 10;
+        }
+
+        /* 标题样式 */
+        .title {
+            padding: 10px 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .title span {
+            padding: 0 10px;
+            line-height: 1.4;
+        }
+
+        /* 列表样式 */
+        .box .list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .box .list img {
+            width: 100%;
+            height: 100px;
+            display: block;
+            margin: 0 auto;
+            object-fit: cover;
+            max-width: 100%;
+        }
+
+        .box .list .name {
+            padding-top: 5px;
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .box .list .list-item {
+            flex: 0 0 25%;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        /* 限制内容长度 */
+        .line1 {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+        }
+
+        .line2 {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+
+        .line3 {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
+
+        /* 通知公告样式 */
+        .notice-item {
+            margin: 0 auto;
+            margin-top: 20px;
+            width: 370px;
+            height: 14px;
+            border-bottom: 1px solid #d9d9d9;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .notice-item span {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            height: 29px;
+            width: 120px;
+            color: #000;
+            line-height: 29px;
+            font-size: 24px;
+            margin-left: -60px;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .notice-list {
+            width: 370px;
+            margin: 0 auto;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            border-bottom: 1px dashed #d9d9d9;
+            transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            -ms-transition: all 0.5s;
+        }
+
+        .notice-list:hover {
+            padding-left: 10px;
+        }
+
+        /* 套装样式 */
+        .b-link-stripe {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            font-weight: 300;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .b-animate-go {
+            text-decoration: none;
+        }
+
+        .view {
+            width: 24%;
+            height: 35px;
+            margin: 3px;
+            float: left;
+            border: 5px solid #F1F0F0;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+            -webkit-box-shadow: 1px 1px 2px #e6e6e6;
+            -moz-box-shadow: 1px 1px 2px #e6e6e6;
+            box-shadow: 1px 1px 2px #e6e6e6;
+            cursor: default;
+            background: #fff;
+        }
+
+        .view .mask {
+            width: 100%;
+            height: 97%;
+            position: absolute;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .view img {
+            display: block;
+            position: relative;
+        }
+
+        .view h4 {
+            text-transform: uppercase;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            font-size: 17px;
+            padding: 10px;
+            background: rgba(33, 33, 33, 0.6);
+            margin: 7em 0;
+        }
+
+        .view a.info {
+            display: inline-block;
+            text-decoration: none;
+            padding: 7px 14px;
+            background: #000;
+            color: #fff;
+            text-transform: uppercase;
+            -webkit-box-shadow: 0 0 1px #000;
+            -moz-box-shadow: 0 0 1px #000;
+            box-shadow: 0 0 1px #000;
+        }
+
+        .view a.info:hover {
+            -webkit-box-shadow: 0 0 5px #000;
+            -moz-box-shadow: 0 0 5px #000;
+            box-shadow: 0 0 5px #000;
+        }
+
+        .view-seventh img {
+            -webkit-transition: all 0.5s ease-out;
+            -moz-transition: all 0.5s ease-out;
+            -o-transition: all 0.5s ease-out;
+            -ms-transition: all 0.5s ease-out;
+            transition: all 0.5s ease-out;
+            -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+            filter: alpha(opacity=100);
+            opacity: 1;
+        }
+
+        .view-seventh .mask {
+            background-color: var(--publicMainColor, orange);
+            -webkit-transform: rotate(0deg) scale(1);
+            -moz-transform: rotate(0deg) scale(1);
+            -o-transform: rotate(0deg) scale(1);
+            -ms-transform: rotate(0deg) scale(1);
+            transform: rotate(0deg) scale(1);
+            -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            filter: alpha(opacity=0);
+            opacity: 0;
+            -webkit-transition: all 0.3s ease-out;
+            -moz-transition: all 0.3s ease-out;
+            -o-transition: all 0.3s ease-out;
+            -ms-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
+        }
+
+        .view-seventh h4 {
+            -webkit-transform: translateY(-200px);
+            -moz-transform: translateY(-200px);
+            -o-transform: translateY(-200px);
+            -ms-transform: translateY(-200px);
+            transform: translateY(-200px);
+            -webkit-transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            -ms-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .view-seventh a.info {
+            -webkit-transform: translateY(-200px);
+            -moz-transform: translateY(-200px);
+            -o-transform: translateY(-200px);
+            -ms-transform: translateY(-200px);
+            transform: translateY(-200px);
+            -webkit-transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            -ms-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .view-seventh:hover img {
+            -webkit-transform: rotate(720deg) scale(0);
+            -moz-transform: rotate(720deg) scale(0);
+            -o-transform: rotate(720deg) scale(0);
+            -ms-transform: rotate(720deg) scale(0);
+            transform: rotate(720deg) scale(0);
+            -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            filter: alpha(opacity=0);
+            opacity: 0;
+        }
+
+        .view-seventh:hover .mask {
+            -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+            filter: alpha(opacity=100);
+            opacity: 1;
+            -webkit-transform: translateY(0px) rotate(0deg);
+            -moz-transform: translateY(0px) rotate(0deg);
+            -o-transform: translateY(0px) rotate(0deg);
+            -ms-transform: translateY(0px) rotate(0deg);
+            transform: translateY(0px) rotate(0deg);
+            -webkit-transition-delay: 0.4s;
+            -moz-transition-delay: 0.4s;
+            -o-transition-delay: 0.4s;
+            -ms-transition-delay: 0.4s;
+            transition-delay: 0.4s;
+        }
+
+        .view-seventh:hover h4 {
+            -webkit-transform: translateY(0px);
+            -moz-transform: translateY(0px);
+            -o-transform: translateY(0px);
+            -ms-transform: translateY(0px);
+            transform: translateY(0px);
+            -webkit-transition-delay: 0.7s;
+            -moz-transition-delay: 0.7s;
+            -o-transition-delay: 0.7s;
+            -ms-transition-delay: 0.7s;
+            transition-delay: 0.7s;
+        }
+
+        .view-seventh:hover a.info {
+            -webkit-transform: translateY(0px);
+            -moz-transform: translateY(0px);
+            -o-transform: translateY(0px);
+            -ms-transform: translateY(0px);
+            transform: translateY(0px);
+            -webkit-transition-delay: 0.5s;
+            -moz-transition-delay: 0.5s;
+            -o-transition-delay: 0.5s;
+            -ms-transition-delay: 0.5s;
+            transition-delay: 0.5s;
+        }
+
+        .main:nth-child(3) {
+            margin: 3em 0 0;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- 轮播图和通知公告部分 -->
+    <div class="banner">
+        <div style="width: 1200px; margin: 0 auto; height: 370px; display: flex; justify-content: space-around;">
+            <!-- 轮播图 -->
+            <div class="banner" style="width: 64%;">
+                <div class="layui-carousel" id="test1" style="height: 370px !important; position: relative">
+                    <div carousel-item class="wow slideInLeft" data-wow-duration="3s" style="visibility: visible; animation-duration: 3s; animation-name: slideInLeft;">
+                        <div v-for="(item, index) in swiperList" :key="index">
+                            <img style="width: 100%; height: 100%; object-fit: cover;" :src="baseUrl + item.img"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 通知公告 -->
+            <div style="width: 34%; background-color: #fff; height: 370px;">
+                <div class="notice-item">通知公告信息</div>
+                <div class="notice-app" v-for="(item, index) in newsList" v-if="index < 5">
+                    <div class="notice-list" @click="jump('../news/detail.html?id=' + item.id)">
+                        <em style="font-size: 26px; color: #000; margin: 5px 16px;">
+                            {{index + 1}}
+                        </em>
+                        <span>{{ item.newsName }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 内容部分 -->
+    <div id="content" style="margin-top: 16px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: center; background-repeat: no-repeat; background-position: center center; background-size: cover;">
+            <div class="box" style="width: 100%; display: flex; justify-content: space-between;">
+                <!-- 膳食信息展示 -->
+                <div class="module" style="margin: 0 10px; background-color: #ebeef5;">
+                    <div class="title" :style='{"padding":"0px 0  20px 0","boxShadow": "#fff 0px 0px 6px","margin":"10px 0 20px 0","borderColor":"rgba(0,0,0,1)","color":"rgba(0, 0, 0, 1)"}'>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>膳食信息展示</span>
+                            <span @click="jump('../meishi/list.html')">
+                                    <a style="color: blue; text-decoration: underline;">查看更多>></a>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="portfolio" id="gallery" style="flex-wrap: wrap; justify-content: space-around;">
+                        <div class="wow " data-wow-duration="2s" data-wow-delay="1s">
+                            <div class="list" style="display: flex; flex-direction: column;">
+                                <div v-for="(item, index) in meishiList" :key="index" v-if="index < 5" class="list-item" @click="jump('../meishi/detail.html?id=' + item.id)">
+                                    <div class="notice-list" @click="jump('../meishi/detail.html?id=' + item.id)">
+                                        <em style="font-size: 26px; color: #000; margin: 5px 16px;">
+                                            {{index + 1}}
+                                        </em>
+                                        <span>{{ item.meishiName }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 运动信息展示 -->
+                <div class="module" style="margin: 0 10px; background-color: #ebeef5;">
+                    <div class="title" :style='{"padding":"0px 0  20px 0","boxShadow": "#fff 0px 0px 6px","margin":"10px 0 20px 0","borderColor":"rgba(0,0,0,1)","color":"rgba(0, 0, 0, 1)"}'>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>运动信息展示</span>
+                            <span @click="jump('../yundong/list.html')">
+                                    <a style="color: blue; text-decoration: underline;">查看更多>></a>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="portfolio" id="gallery" style="flex-wrap: wrap; justify-content: space-around;">
+                        <div class="wow " data-wow-duration="2s" data-wow-delay="1s">
+                            <div class="list" style="display: flex; flex-direction: column;">
+                                <div v-for="(item, index) in yundongList" :key="index" v-if="index < 5" class="list-item" @click="jump('../yundong/detail.html?id=' + item.id)">
+                                    <div class="notice-list" @click="jump('../yundong/detail.html?id=' + item.id)">
+                                        <em style="font-size: 26px; color: #000; margin: 5px 16px;">
+                                            {{index + 1}}
+                                        </em>
+                                        <span>{{ item.yundongName }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 相关产品 -->
+                <div class="module" style="margin: 0 10px; background-color: #ebeef5;">
+                    <div class="title" :style='{"padding":"0px 0  20px 0","boxShadow": "#fff 0px 0px 6px","margin":"10px 0 20px 0","borderColor":"rgba(0,0,0,1)","color":"rgba(0, 0, 0, 1)"}'>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>相关产品</span>
+                            <span @click="jump('../supplies/list.html')">
+                                    <a style="color: blue; text-decoration: underline;">查看更多>></a>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <div class="wow " data-wow-duration="2s" data-wow-delay="1s">
+                            <div class="list" style="display: flex; flex-direction: column;">
+                                <div v-for="(item, index) in suppliesList" :key="index" v-if="index < 5" class="list-item" @click="jump('../supplies/detail.html?id=' + item.id)">
+                                    <div class="notice-list" @click="jump('../supplies/detail.html?id=' + item.id)">
+                                        <em style="font-size: 26px; color: #000; margin: 5px 16px;">
+                                            {{index + 1}}
+                                        </em>
+                                        <span>{{ item.suppliesName }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 运动建议 -->
+                <div class="module" style="margin: 0 10px; background-color: #ebeef5;">
+                    <div class="title" :style='{"padding":"0px 0  20px 0","boxShadow": "#fff 0px 0px 6px","margin":"10px 0 20px 0","borderColor":"rgba(0,0,0,1)","color":"rgba(0, 0, 0, 1)"}'>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>运动建议</span>
+                            <span @click="jump('../yundong/list.html')">
+                                    <a style="color: blue; text-decoration: underline;">查看更多>></a>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <div class="wow " data-wow-duration="2s" data-wow-delay="1s">
+                            <div class="list" style="display: flex; flex-direction: column;">
+                                <div v-for="(item, index) in yundongjyList" :key="index" v-if="index < 5" class="list-item" @click="jump('../yundong/detail.html?id=' + item.id)">
+                                    <div class="notice-list" @click="jump('../yundong/detail.html?id=' + item.id)">
+                                        <em style="font-size: 26px; color: #000; margin: 5px 16px;">
+                                            {{index + 1}}
+                                        </em>
+                                        <span>{{ item.yundongName }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 社区论坛和个人帖子部分 -->
+    <div id="content" style="margin-top: 22px;">
+        <div style="display: flex; justify-content: center; background-repeat: no-repeat; background-position: center center; background-size: cover;">
+            <div class="box" style="width: 100%; display: flex; justify-content: space-between;">
+                <!-- 社区论坛 -->
+                <div class="module" style="margin: 0 10px; background-color: #ebeef5;">
+                    <div class="title" :style='{"padding":"0px 0  20px 0","boxShadow": "#fff 0px 0px 6px","margin":"10px 0 20px 0","borderColor":"rgba(0,0,0,1)","color":"rgba(0, 0, 0, 1)"}'>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>社区论坛</span>
+                            <span @click="jump('../forum/list.html')">
+                                    <a style="color: blue; text-decoration: underline;">查看更多>></a>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="portfolio" id="gallery" style="flex-wrap: wrap; justify-content: space-around;">
+                        <div class="wow " data-wow-duration="2s" data-wow-delay="1s">
+                            <div class="list" style="display: flex; flex-direction: column;">
+                                <div v-for="(item, index) in forumList" :key="index" v-if="index < 5" class="list-item" @click="jump('../forum/detail.html?id=' + item.id)">
+                                    <div class="notice-list" @click="jump('../forum/detail.html?id=' + item.id)">
+                                        <em style="font-size: 26px; color: #000; margin: 5px 16px;">
+                                            {{index + 1}}
+                                        </em>
+                                        <span>{{ item.forumName }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 个人帖子 -->
+                <div class="module" style="margin: 0 10px; background-color: #ebeef5;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>个人帖子</span>
+                        <span @click="jump('../forum/list.html')">
+                                <a style="color: blue; text-decoration: underline;">查看更多>></a>
+                            </span>
+                    </div>
+                    <div class="portfolio" id="gallery" style="flex-wrap: wrap; justify-content: space-around;">
+                        <div class="wow " data-wow-duration="2s" data-wow-delay="1s">
+                            <div class="list" style="display: flex; flex-direction: column;">
+                                <div v-for="(item, index) in forumgrList" :key="index" v-if="index < 5" class="list-item" @click="jump('../forum/detail.html?id=' + item.id)">
+                                    <div class="notice-list" @click="jump('../forum/detail.html?id=' + item.id)">
+                                        <em style="font-size: 26px; color: #000; margin: 5px 16px;">
+                                            {{index + 1}}
+                                        </em>
+                                        <span>{{ item.forumName }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入外部脚本文件 -->
+<script src="../../xznstatic/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../xznstatic/js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../layui/layui.js"></script>
+<script src="../../js/vue.js"></script>
+<!-- 引入element组件库 -->
+<script src="../../xznstatic/js/element.min.js"></script>
+<!-- 引入element样式 -->
+<link rel="stylesheet" href="../../xznstatic/css/element.min.css">
+<script src="../../xznstatic/js/swiper.min.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../modules/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../xznstatic/js/wow.min.js"></script>
+<script type="text/javascript">
+    // 动画效果
+    new WOW().init();
+
+    Vue.prototype.myFilters = function (msg) {
+        if (msg == null || msg == "") {
+            return "";
+        } else if (msg.length > 20) {
+            msg.replace(/\n/g, "<br>");
+            return msg.substring(0, 20) + "......";
+        } else {
+            return msg.replace(/\n/g, "<br>");
+        }
+    };
+
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            swiperList: [],
+            baseUrl: "",
+            newsList: [],
+            newsTypesList: [],
+            suppliesList: [],
+            suppliesTypesList: [],
+            // 类型查询条件
+            newsTypes: "",
+            suppliesTypes: "",
+            meishiList: [],
+            forumList: [],
+            forumgrList: [],
+            yundongList: [],
+            yundongjyList: [],
+        },
+        filters: {
+            newsDesc: function (val) {
+                if (val) {
+                    val = val.replace(/<[^<>]+>/g, '').replace(/undefined/g, '');
+                    if (val.length > 60) {
+                        val = val.substring(0, 60);
+                    }
+                    return val;
+                }
+                return '';
+            }
+        },
+        methods: {
+            jump(url) {
+                jump(url)
+            },
+            jumpCheck(url, check1, check2) {
+                if (check1 == "2" || check1 == 2) { // 级联表的逻辑删除字段[1:未删除 2:已删除]
+                    layui.layer.msg("已经被删除", {
+                        time: 2000,
+                        icon: 2
+                    });
+                    return false;
+                }
+                if (check2 == "2" || check2 == 2) { // 是否下架[1:上架 2:下架]
+                    layui.layer.msg("已经下架", {
+                        time: 2000,
+                        icon: 2
+                    });
+                    return false;
+                }
+                this.jump(url);
+            }
+        }
+    });
+
+    layui.use(['layer', 'form', 'element', 'carousel', 'http', 'jquery'], function () {
+        var layer = layui.layer;
+        var element = layui.element;
+        var form = layui.form;
+        var carousel = layui.carousel;
+        var http = layui.http;
+        var jquery = layui.jquery;
+        vue.baseUrl = http.baseurl;
+
+        // 获取轮播图数据
+        http.request('config/list', 'get', {
+            page: 1,
+            limit: 5
+        }, function (res) {
+            if (res.data.list.length > 0) {
+                let swiperList = [];
+                res.data.list.forEach(element => {
+                    if (element.value != null) {
+                        swiperList.push({
+                            img: element.value
+                        });
+                    }
+                });
+                vue.swiperList = swiperList;
+
+                vue.$nextTick(() => {
+                    carousel.render({
+                        elem: '#test1',
+                        width: '100%',
+                        height: '100%',
+                        arrow: 'hover',
+                        anim: 'default',
+                        autoplay: 'true',
+                        interval: '3000',
+                        indicator: 'inside'
+                    });
+                });
+            }
+        });
+
+        // 数据查询函数
+        function yundongSelect() {
+            http.request('yundong/list', 'get', {
+                page: 1,
+                limit: 8,
+                newsTypes: vue.newsTypes, // 类型
+                order: "desc" // asc desc
+            }, function (res) {
+                vue.yundongList = res.data.list;
+            });
+        }
+
+        function yundongjySelect() {
+            http.request('yundong/gexingtuijian', 'get', {
+                page: 1,
+                limit: 8,
+                newsTypes: vue.newsTypes, // 类型
+                order: "desc" // asc desc
+            }, function (res) {
+                vue.yundongjyList = res.data.list;
+            });
+        }
+
+        function meishiSelect() {
+            http.request('meishi/list', 'get', {
+                page: 1,
+                limit: 8,
+                newsTypes: vue.newsTypes, // 类型
+                order: "desc" // asc desc
+            }, function (res) {
+                vue.meishiList = res.data.list;
+            });
+        }
+
+        function forumSelect() {
+            http.request('forum/list', 'get', {
+                page: 1,
+                limit: 8,
+                newsTypes: vue.newsTypes, // 类型
+                order: "desc" // asc desc
+            }, function (res) {
+                vue.forumList = res.data.list;
+            });
+        }
+
+        function forumgrSelect() {
+            http.request('forum/listgr', 'get', {
+                page: 1,
+                limit: 8,
+                newsTypes: vue.newsTypes, // 类型
+                order: "desc" // asc desc
+            }, function (res) {
+                vue.forumgrList = res.data.list;
+            });
+        }
+
+        function newsSelect() {
+            http.request('news/list', 'get', {
+                page: 1,
+                limit: 8,
+                newsTypes: vue.newsTypes, // 类型
+                order: "desc" // asc desc
+            }, function (res) {
+                vue.newsList = res.data.list;
+            });
+        }
+
+        function suppliesSelect() {
+            http.request('supplies/list', 'get', {
+                page: 1,
+                limit: 8,
+                suppliesDelete: 1,
+                suppliesTypes: vue.suppliesTypes, // 类型
+                order: "desc" // asc desc
+            }, function (res) {
+                vue.suppliesList = res.data.list;
+            });
+        }
+
+        // 类型查询函数
+        function newsTypesSelect() {
+            http.request("dictionary/page?page=1&limit=100&sort=&order=&dicCode=news_types", 'get', {}, function (res) {
+                if (res.code == 0) {
+                    vue.newsTypesList = res.data.list;
+                }
+            });
+        }
+
+        function suppliesTypesSelect() {
+            http.request("dictionary/page?page=1&limit=100&sort=&order=&dicCode=supplies_types", 'get', {}, function (res) {
+                if (res.code == 0) {
+                    vue.suppliesTypesList = res.data.list;
+                }
+            });
+        }
+
+        // 调用数据查询和类型查询函数
+        yundongSelect();
+        yundongjySelect();
+        meishiSelect();
+        forumSelect();
+        forumgrSelect();
+        newsSelect();
+        newsTypesSelect();
+        suppliesSelect();
+        suppliesTypesSelect();
+
+        // 类型动态搜索
+        // $(document).on("click", ".newsTypes-search", function (e) {
+        //     vue.newsTypes = $(this).attr('index');
+        //     newsSelect();
+        // });
+        //
+        // $(document).on("click", ".suppliesTypes-search", function (e) {
+        //     vue.suppliesTypes = $(this).attr('index');
+        //     suppliesSelect();
+        // });
+    });
+
+    window.xznSlide = function () {
+        // jQuery(".banner").slide({mainCell:".bd ul",autoPlay:true,interTime:5000});
+        jQuery("#ifocus").slide({
+            titCell: "#ifocus_btn li",
+            mainCell: "#ifocus_piclist ul",
+            effect: "leftLoop",
+            delayTime: 200,
+            autoPlay: true,
+            triggerTime: 0
+        });
+        jQuery("#ifocus").slide({titCell: "#ifocus_btn li", mainCell: "#ifocus_tx ul", delayTime: 0, autoPlay: true});
+        jQuery(".product_list").slide({
+            mainCell: ".bd ul",
+            autoPage: true,
+            effect: "leftLoop",
+            autoPlay: true,
+            vis: 5,
+            trigger: "click",
+            interTime: 4000
+        });
+    };
+</script>
+<script src="../../xznstatic/js/index.js"></script>
+</body>
+</html>

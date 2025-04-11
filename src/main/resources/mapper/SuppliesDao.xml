@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.SuppliesDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.supplies_name as suppliesName
+        ,a.supplies_photo as suppliesPhoto
+        ,a.supplies_types as suppliesTypes
+        ,a.zuowei_number as zuoweiNumber
+        ,a.zan_number as zanNumber
+        ,a.cai_number as caiNumber
+        ,a.supplies_delete as suppliesDelete
+        ,a.supplies_content as suppliesContent
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.SuppliesView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+
+        FROM supplies  a
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test=" params.suppliesName != '' and params.suppliesName != null and params.suppliesName != 'null' ">
+                and a.supplies_name like CONCAT('%',#{params.suppliesName},'%')
+            </if>
+            <if test="params.suppliesTypes != null and params.suppliesTypes != ''">
+                and a.supplies_types = #{params.suppliesTypes}
+            </if>
+            <if test="params.zuoweiNumberStart != null and params.zuoweiNumberStart != ''">
+                <![CDATA[  and a.zuowei_number >= #{params.zuoweiNumberStart}   ]]>
+            </if>
+            <if test="params.zuoweiNumberEnd != null and params.zuoweiNumberEnd != ''">
+                <![CDATA[  and a.zuowei_number <= #{params.zuoweiNumberEnd}   ]]>
+            </if>
+             <if test="params.zuoweiNumber != null and params.zuoweiNumber != ''">
+                and a.zuowei_number = #{params.zuoweiNumber}
+             </if>
+            <if test="params.zanNumberStart != null and params.zanNumberStart != ''">
+                <![CDATA[  and a.zan_number >= #{params.zanNumberStart}   ]]>
+            </if>
+            <if test="params.zanNumberEnd != null and params.zanNumberEnd != ''">
+                <![CDATA[  and a.zan_number <= #{params.zanNumberEnd}   ]]>
+            </if>
+             <if test="params.zanNumber != null and params.zanNumber != ''">
+                and a.zan_number = #{params.zanNumber}
+             </if>
+            <if test="params.caiNumberStart != null and params.caiNumberStart != ''">
+                <![CDATA[  and a.cai_number >= #{params.caiNumberStart}   ]]>
+            </if>
+            <if test="params.caiNumberEnd != null and params.caiNumberEnd != ''">
+                <![CDATA[  and a.cai_number <= #{params.caiNumberEnd}   ]]>
+            </if>
+             <if test="params.caiNumber != null and params.caiNumber != ''">
+                and a.cai_number = #{params.caiNumber}
+             </if>
+            <if test="params.suppliesDeleteStart != null and params.suppliesDeleteStart != ''">
+                <![CDATA[  and a.supplies_delete >= #{params.suppliesDeleteStart}   ]]>
+            </if>
+            <if test="params.suppliesDeleteEnd != null and params.suppliesDeleteEnd != ''">
+                <![CDATA[  and a.supplies_delete <= #{params.suppliesDeleteEnd}   ]]>
+            </if>
+             <if test="params.suppliesDelete != null and params.suppliesDelete != ''">
+                and a.supplies_delete = #{params.suppliesDelete}
+             </if>
+            <if test=" params.suppliesContent != '' and params.suppliesContent != null and params.suppliesContent != 'null' ">
+                and a.supplies_content like CONCAT('%',#{params.suppliesContent},'%')
+            </if>
+
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>
